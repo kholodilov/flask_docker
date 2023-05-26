@@ -1,0 +1,22 @@
+mkdir flask_docker
+cd flask_docker
+
+python -m venv .venv
+. .venv/bin/activate
+
+pip install Flask
+flask --app main run
+
+pip freeze > requirements.txt
+deactivate
+
+docker image build -t flask_docker .
+docker run -dp 5000:5000 flask_docker
+docker ps
+docker stop <id>
+docker rm <id>
+
+docker tag flask_docker kholodilov/flask_docker
+docker push kholodilov/flask_docker
+
+docker run -dp 5000:5000 kholodilov/flask_docker
